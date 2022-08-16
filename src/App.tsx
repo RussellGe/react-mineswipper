@@ -1,24 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-
+import Block from './components/Block/Block';
+interface State {
+  row: number
+}
 function App() {
+  const state: State = {
+    row: 5
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      { Array.from({length: state.row}).map(() => {
+        return <Block />
+      }) }
+      
     </div>
   );
 }
