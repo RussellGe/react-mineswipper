@@ -1,18 +1,15 @@
 import React from 'react';
 import './App.css';
-import Block from './components/Block/Block';
-interface State {
-  row: number
-}
+import Row from './components/Row/Row';
+import { GameState } from './utils/initGame';
+
 function App() {
-  const state: State = {
-    row: 5
-  }
+  const game = GameState
 
   return (
     <div className="App">
-      { Array.from({length: state.row}).map(() => {
-        return <Block />
+      { game.board.map((item, index) => {
+        return <Row key={index} row={item} />
       }) }
       
     </div>

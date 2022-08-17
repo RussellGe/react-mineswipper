@@ -1,15 +1,16 @@
 import React from 'react';
-import styles from './row.less'
+import './row.scss'
 import Block from '../Block/Block'
+import type {Block as BlockType} from '../../types/index'
 interface RowProps {
-    row: number
+    row: BlockType[]
 }
 const Row: React.FC<RowProps> =  (props) => {
     const { row } = props
   return (
-    <div className={styles.row}>
-      {Array.from({length: row}).map(() => {
-        return <Block />
+    <div className='row'>
+      {row.map((item, index) => {
+        return <Block key={index} block={item}/>
       })}
     </div>
   );
