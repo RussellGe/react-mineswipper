@@ -1,7 +1,9 @@
 export interface Game {
-  board: Block[][];
+  
+  
+    board: Block[][];
   mineGenerated: boolean;
-  status: "ready";
+  status: "ready" | 'start' | 'success' | 'fail';
   entities: Entities[][];
 }
 
@@ -14,6 +16,8 @@ export interface Block {
   y: number;
   revealed: boolean;
   adjacentMines: number;
+  mine: boolean;
+  flagged: boolean
 }
 export interface GameControll {
     board: Block[][];
