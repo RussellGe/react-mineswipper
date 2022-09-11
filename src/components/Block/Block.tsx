@@ -14,7 +14,9 @@ const Block = (props: BlockProps) => {
   return (
     <div
       onClick={onChange}
-      className={classNames("block", { revealed: block.revealed })}
+      className={classNames("block", `num-${block.adjacentMines}`, {
+        revealed: block.revealed,
+      })}
     >
       {block.revealed && block.adjacentMines ? block.adjacentMines : ""}
     </div>
