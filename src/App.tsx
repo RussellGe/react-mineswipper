@@ -1,17 +1,18 @@
-import React from 'react';
-import './App.css';
-import Row from './components/Row/Row';
-import { GameState } from './utils/initGame';
+import React from "react";
+import "./App.css";
+import BoardContext from "./components/Block/BoardContext";
+import Row from "./components/Row/Row";
+import useGame from "./hooks/useGame";
 
 function App() {
-  const game = GameState
-
+  const [game] = useGame(10, 10, 8)!;
   return (
     <div className="App">
-      { game.board.map((item, index) => {
-        return <Row key={index} row={item} />
-      }) }
-      
+      <BoardContext.Provider value={game}>
+        {game.board.map((item, index) => {
+          return <Row key={index} y={index} row={item}/>;
+        })}
+      </BoardContext.Provider>
     </div>
   );
 }
