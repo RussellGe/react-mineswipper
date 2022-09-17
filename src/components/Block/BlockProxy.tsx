@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, MouseEvent } from "react";
 import classNames from "classnames";
 import "./Block.scss";
 import { Block as BlockType } from "../../types";
@@ -14,18 +14,28 @@ interface BlockProps {
 const BlockProxy = (props: BlockProps) => {
   const { x, y } = props;
   const [, forceUpdate] = React.useReducer((x) => x + 1, 0);
-  const { setEntity, click, getValue } = React.useContext(BoardContext)!;
+  const { setEntity, click, getValue, flag } = React.useContext(BoardContext)!;
   useLayoutEffect(() => {
     setEntity(x, y, { props, onChange: () => forceUpdate() });
   }, []);
-  console.log(1)
+  console.log(1);
   const handleClick = () => {
     click(x, y);
     setTimeout(() => {
       console.log(getValue(x, y));
     });
   };
-  return <Block block={getValue(x, y)} onChange={handleClick} />;
+  const handleContextMenu = (e: MouseEvent) => {
+    e.preventDefault();
+    flag(x, y);
+  };
+  return (
+    <Block
+      block={getValue(x, y)}
+      onChange={handleClick}
+      onContextMenu={handleContextMenu}
+    />
+  );
 };
 
 export default BlockProxy;

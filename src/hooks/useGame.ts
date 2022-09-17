@@ -17,6 +17,7 @@ export class GameStore {
     status: "ready",
     entities: [],
   };
+  flaggedList: Set<Block> = new Set() 
   constructor(
     public width: number,
     public height: number,
@@ -117,6 +118,14 @@ export class GameStore {
     });
   }
   click(x: number, y: number) {
+    if(this.state.board[y][x].flagged) {
+      return
+    }
+    if(this.state.board[y][x].mine) {
+      this.state.status = 'fail'
+      alert('fail')
+      this.reset(this.width, this.height, this.mines)
+    }
     if (!this.state.mineGenerated) {
       console.log("click gener");
       this.generateMines(x, y);
@@ -127,10 +136,29 @@ export class GameStore {
     if (!this.state.board[y][x].adjacentMines) {
       this.expandZero(x, y);
     }
-    console.log(this.state);
   }
   getValue(x: number, y: number) {
     return this.state.board[y][x];
+  }
+  flag(x: number, y: number) {
+    this.state.board[y][x].flagged = !this.state.board[y][x].flagged
+    if(this.state.board[y][x].flagged) {
+      this.flaggedList.add(this.state.board[y][x])
+      if(this.flaggedList.size === this.mines) {
+        let winFlag = true
+        this.flaggedList.forEach(item => {
+          if(!item.mine) {
+            winFlag = false
+          }
+        })
+        if(winFlag) {
+          alert('win')
+        }
+      }
+    } else {
+      this.flaggedList.delete(this.state.board[y][x])
+    }
+    this.state.entities[y][x].onChange();
   }
   GameControll() {
     return {
@@ -138,6 +166,7 @@ export class GameStore {
       setEntity: this.setEntity.bind(this),
       click: this.click.bind(this),
       getValue: this.getValue.bind(this),
+      flag: this.flag.bind(this)
     };
   }
 }

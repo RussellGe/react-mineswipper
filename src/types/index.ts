@@ -23,5 +23,6 @@ export interface GameControll {
     board: Block[][];
     setEntity: (x: number, y: number, entity: Entities) => void;
     click: (x: number, y: number) => void;
+    flag: (x: number, y: number) => void;
     getValue: (x: number, y: number) => Block;
 }
